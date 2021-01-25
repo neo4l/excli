@@ -1,4 +1,4 @@
 #！ /bin/bash
 
-#go build
-./excli --exchange binance.com --accesskey aaa --sercetkey bbb --currencyPair MFT_USDT --orderType 2 --orderCnt 3 --orderAmount 10000 --orderChangeRate 0.003 --minPrice 0 --maxPrice 0 --interval 5
+# go build
+./excli --exchange binance.com --accesskey aaa --sercetkey bbb --currencyPair KAVA_USDT --orderType 1 --orderCnt 3 --orderAmount 800.01 --orderChangeRate 0.002 --minPrice 0 --maxPrice 2.5 --interval 5

@@ -48,8 +48,9 @@ func main() {
 	exJob.MaxPrice = maxPrice
 	exJob.Interval = time.Duration(interval) * time.Second
 	fmt.Printf("exchange: %s\n", exchange)
-	fmt.Printf("accesskey: %s\n", accesskey)
-	fmt.Printf("sercetkey: %s\n", sercetkey)
+	//fmt.Printf("accesskey: %s\n", accesskey)
+	//fmt.Printf("sercetkey: %s\n", sercetkey)
+	fmt.Printf("currencyPair: %s\n", currencyPair)
 	fmt.Println(ex.ToJson(exJob))
 	exJob.Run()
 

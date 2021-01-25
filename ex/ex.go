@@ -57,7 +57,7 @@ func NewJob2(api goex.API, currency string, orderType int, orderAmount float64) 
 }
 
 func (self *EXJob) Run() {
-	if err := self.GetPrecision(); err != nil {
+	if err := self.InitParams(); err != nil {
 		fmt.Printf("Get precision fail: %s", err)
 		return
 	}
@@ -79,7 +79,7 @@ func (self *EXJob) Run() {
 	}
 }
 
-func (self *EXJob) GetPrecision() error {
+func (self *EXJob) InitParams() error {
 	ticker, err := self.GetTicker()
 	if err != nil {
 		return err
@@ -107,16 +107,17 @@ func (self *EXJob) NewOrders(orderCnt int) error {
 	Println(ToJson(ticker))
 
 	//self.NewOrderMarket(ticker)
+	rand.Seed(time.Now().UnixNano())
 
 	for i := 0; i < orderCnt; i++ {
 
-		amount := Float64ToString(self.OrderAmount+float64(rand.Intn(50)), self.AmountPrecision)
+		amount := Float64ToString(self.OrderAmount*float64(1+rand.Float64()/20), self.AmountPrecision)
 		price, err := self.GetPrice(ticker, i)
 		if err != nil {
 			continue
 		}
-
 		fmt.Printf("new order: %d, %s, %s\n", self.OrderType, amount, price)
+
 		order, err := self.NewOrder(self.OrderType, amount, price)
 		if err != nil {
 			Println("new order error:", err)
@@ -154,7 +155,6 @@ func (self *EXJob) GetPrice(ticker *goex.Ticker, seq int) (string, error) {
 }
 
 func (self *EXJob) NewOrder(orderType int, amount, price string) (*goex.Order, error) {
-	//fmt.Printf("new order: %d, %s, %s\n", orderType, amount, price)
 	switch orderType {
 	case 1:
 		return self.API.LimitBuy(amount, price, self.CurrencyPair)
